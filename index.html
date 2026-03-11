@@ -4,6 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Harshit Rawal</title>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-WHXQJ0J0KX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-WHXQJ0J0KX');
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
@@ -790,63 +799,49 @@ nav.stuck {
 }
 .clink:hover .clink-val { color: var(--ink); }
 
-/* status grid */
-.status-block {
-  border: 1px solid var(--rule);
-  padding: 28px;
-  position: relative;
+/* availability card */
+.avail-card {
+  padding: 36px 0;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
 }
-.status-block::before {
-  content: 'Current Status';
-  position: absolute;
-  top: -9px; left: 20px;
-  background: var(--paper);
-  padding: 0 8px;
+.avail-indicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+.avail-status {
   font-family: var(--mono);
-  font-size: 10px;
-  color: var(--ink4);
+  font-size: 11px;
+  color: #4a7c59;
   letter-spacing: .14em;
   text-transform: uppercase;
 }
-.sec.tinted .status-block::before { background: var(--cream); }
-.sgrid { display: grid; grid-template-columns: 1fr 1fr; }
-.si {
-  padding: 14px 16px;
-  border-bottom: 1px solid var(--rule);
-  border-right: 1px solid var(--rule);
-}
-.si:nth-child(2n) { border-right: none; }
-.si:nth-last-child(-n+2) { border-bottom: none; }
-.si-l {
-  font-family: var(--mono);
-  font-size: 10px;
-  color: var(--ink4);
-  letter-spacing: .1em;
-  text-transform: uppercase;
-  margin-bottom: 5px;
-}
-.si-v {
-  font-size: 13px;
-  color: var(--ink2);
+.avail-headline {
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 300;
   line-height: 1.45;
+  color: var(--ink);
+  margin-bottom: 20px;
+  max-width: 340px;
 }
-.badge-open {
-  display: inline-block;
-  padding: 1px 7px;
-  border: 1px solid #4a7c59;
-  color: #4a7c59;
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: .08em;
+.avail-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
 }
-.badge-active {
-  display: inline-block;
-  padding: 1px 7px;
-  border: 1px solid var(--rule-hi);
-  color: var(--ink3);
+.avail-meta-item {
   font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: .08em;
+  font-size: 11px;
+  color: var(--ink4);
+  letter-spacing: .06em;
+}
+.avail-divider {
+  color: var(--rule-hi);
+  font-size: 12px;
 }
 
 /* ── FOOTER ── */
@@ -1205,7 +1200,7 @@ footer {
   </div>
   <div class="contact-body">
     <div class="r d1">
-      <h3 class="contact-hl">Open to<br><em>collaboration.</em></h3>
+      <h3 class="contact-hl">Let's build something<br><em>that doesn't break.</em></h3>
       <p class="contact-sub">Research projects, internships, or conversations about adversarial ML and AI security.</p>
       <div class="clinks">
         <a href="mailto:harshitrawal72@gmail.com" class="clink">
@@ -1214,23 +1209,27 @@ footer {
         </a>
         <a href="https://github.com/Vasco1290" target="_blank" class="clink">
           <span class="clink-lbl">GitHub</span>
-          <span class="clink-val">github.com/Vasco1290</span>
+          <span class="clink-val">Vasco1290 ↗</span>
         </a>
         <a href="https://www.linkedin.com/in/harshit-rawal-a71926299/" target="_blank" class="clink">
           <span class="clink-lbl">LinkedIn</span>
-          <span class="clink-val">harshit-rawal-a71926299</span>
+          <span class="clink-val">Harshit Rawal ↗</span>
         </a>
       </div>
     </div>
     <div class="r d2">
-      <div class="status-block">
-        <div class="sgrid">
-          <div class="si"><div class="si-l">Role</div><div class="si-v">Python Dev Intern<br>VPN Digital Service</div></div>
-          <div class="si"><div class="si-l">Status</div><div class="si-v"><span class="badge-open">Open</span></div></div>
-          <div class="si"><div class="si-l">Building</div><div class="si-v"><span class="badge-active">Active</span><br>KavaX Antivirus</div></div>
-          <div class="si"><div class="si-l">Next</div><div class="si-v">NeuroGuard<br>April 2026</div></div>
-          <div class="si"><div class="si-l">Location</div><div class="si-v">Mumbai, India</div></div>
-          <div class="si"><div class="si-l">Focus</div><div class="si-v">Adversarial ML<br>EEG-BCI Security</div></div>
+      <div class="avail-card">
+        <div class="avail-indicator">
+          <span class="nav-dot"></span>
+          <span class="avail-status">Available</span>
+        </div>
+        <p class="avail-headline">Open for research collaboration and internship opportunities.</p>
+        <div class="avail-meta">
+          <span class="avail-meta-item">Mumbai, India</span>
+          <span class="avail-divider">·</span>
+          <span class="avail-meta-item">Remote preferred</span>
+          <span class="avail-divider">·</span>
+          <span class="avail-meta-item">Responds within 48h</span>
         </div>
       </div>
     </div>
