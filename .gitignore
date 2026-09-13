@@ -34,3 +34,6 @@ pnpm-debug.log*
 .env
 .env.*
 !.env.example
+
+# TypeScript incremental build info
+*.tsbuildinfo
