@@ -27,13 +27,19 @@ function PlaceholderSubject() {
     <mesh ref={meshRef}>
       <icosahedronGeometry args={[1.5, 0]} />
       <meshPhysicalMaterial
-        color="#ffffff"
+        // Cool porcelain-gray (not blown-out white) so the cyan emissive is
+        // the brightest element and the bloom halo reads cyan, mirroring the
+        // reference head: matte porcelain with glowing cyan fracture lines.
+        color="#585d66"
         emissive="#00E5FF"
         emissiveIntensity={0.4}
         clearcoat={1.0}
         clearcoatRoughness={0.1}
         roughness={0.2}
         metalness={0.1}
+        // Tame the studio-env reflections so the glossy highlights don't bloom
+        // white and drown the cyan.
+        envMapIntensity={0.25}
       />
     </mesh>
   )
@@ -69,18 +75,23 @@ export default function Hero() {
           gl={{ alpha: true, antialias: true, preserveDrawingBuffer: true }}
           style={{ background: 'transparent' }}
         >
-          <ambientLight intensity={0.4} />
-          <directionalLight position={[-5, 5, 5]} intensity={1.2} />
+          <ambientLight intensity={0.35} />
+          {/* Dimmed key so its white specular highlight stays below the bloom
+              threshold; the cyan emissive becomes the brightest bloom source. */}
+          <directionalLight position={[-5, 5, 5]} intensity={0.5} />
 
           <PlaceholderSubject />
 
-          {/* Studio env for physically plausible reflections on the material. */}
-          <Environment preset="studio" />
+          {/* Studio env for physically plausible reflections, dimmed so the
+              reflections don't bloom white over the cyan. */}
+          <Environment preset="studio" environmentIntensity={0.35} />
 
           <EffectComposer>
             <Bloom
               intensity={1.5}
-              luminanceThreshold={0.5}
+              // Just below the cyan emissive's luminance (~0.29) so the cyan
+              // blooms clearly while the dimmed white highlights stay under it.
+              luminanceThreshold={0.18}
               luminanceSmoothing={0.9}
             />
             {/* postprocessing's EffectComposer disables the renderer's built-in
