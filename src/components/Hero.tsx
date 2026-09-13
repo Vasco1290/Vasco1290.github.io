@@ -64,7 +64,9 @@ export default function Hero() {
       <div className="absolute inset-0 z-10">
         <Canvas
           camera={{ position: [0, 0, 5], fov: 45 }}
-          gl={{ alpha: true, antialias: true }}
+          // preserveDrawingBuffer lets us read the rendered frame back
+          // (screenshot export + the static-image fallback generated later).
+          gl={{ alpha: true, antialias: true, preserveDrawingBuffer: true }}
           style={{ background: 'transparent' }}
         >
           <ambientLight intensity={0.4} />
