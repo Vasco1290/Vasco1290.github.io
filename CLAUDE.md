@@ -31,50 +31,94 @@ Multiple references may apply to a single decision.
 
 ## Stack
 - Vite + React 19 + TypeScript
-- React Three Fiber + Drei + Postprocessing for 3D
 - Tailwind CSS for layout and utility styling
+- Lenis for smooth scroll
 - Framer Motion for component-level motion
 - GSAP + ScrollTrigger for scroll-choreographed sequences
-- Leva for dev-time 3D scene tweaking (dev only, strip from prod)
+- React Three Fiber + Drei + Postprocessing — Research section ONLY
+  (Phase G); reinstalled there, procedural geometry, no .glb file
+- detect-gpu for adaptive rendering and fallbacks
 
-## Design Tokens
-Colors (only three — do NOT introduce a fourth):
-- bg: #F4EFE6 (warm cream)
-- fg: #0A0A0A (near-black)
-- accent: #00E5FF (electric cyan)
+## Design System (source of truth)
 
-Cyan usage rules:
-- Allowed: emissive material on 3D model, hover/active state on
-  interactive elements, key numeric metrics, single-word emphasis
-- Forbidden: body text, paragraph text, section labels, borders
-  larger than 1px, backgrounds
+### Palette — seven neutrals + one emissive
+| Token | Hex | Material |
+|-------|-----|----------|
+| bone | #EAE5DC | warm cream, slightly aged |
+| porcelain | #FAFAFA | cold clean white |
+| chrome | #C8CDD2 | brushed steel grey |
+| graphite | #3A3A3A | carbon composite |
+| charcoal | #1A1A1A | deep engineered black |
+| void | #0A0A0A | true black |
+| cyan | #00E5FF | emissive electric cyan |
 
-Typography:
-- Display: Anton, minimum 96px on hero, 64px on section headers
-- Body: Inter, 16px base, line-height 1.6
-- Numeric metrics: Anton or Inter tabular-nums, cyan color allowed
+### Cyan usage rules
+Allowed: emissive glow, hover/active state, key numeric metrics,
+focus rings (as glowing traces, not outlines), single-word emphasis
+in body text.
 
-Spacing:
+Forbidden: body paragraph text, backgrounds, borders larger than 1px,
+filled shapes, flat color blocks.
+
+### Typography
+- Display: Anton (Google Fonts), minimum 96px on hero, 64px on
+  section headers
+- Body: Inter (Google Fonts), 16px base, line-height 1.6
+- Numeric metrics: Inter tabular-nums, cyan color allowed
+- Never mix more than these two families
+
+### Spacing
 - 8px baseline grid
 - Max content width: 1440px
 - Section padding: 120px desktop / 60px mobile
 
-Motion:
+### Motion
 - Default easing: cubic-bezier(0.22, 1, 0.36, 1)
-- Micro-interactions: 400ms
-- Component entrances: 800ms
-- Hero reveals: 1200ms
+- Micro: 400ms | Component entrance: 800ms | Hero/act reveals: 1200ms
+
+### Material Coherence Principle
+Every UI element (buttons, dividers, cards, section labels) is
+visually made from a material that exists in the cyborg subject's
+world — porcelain, chrome, carbon composite, cyan-emissive traces:
+- Section dividers = 1px chrome-gradient bars, not flat lines
+- Buttons = porcelain tiles, cyan emissive traces on hover
+- Cards = chrome-edged, off-white fill, hairline metal trim
+- Numbers/metrics = engraved (inset shadow) or extruded (drop shadow)
+- Focus states = cyan emissive traces (glowing), never colored outlines
+- Loading states = cyan pulse, matching cyborg vein glow
+
+### Act structure (material temperature descent)
+| Act | Section | Background | Material |
+|-----|---------|-----------|----------|
+| I | Hero | bone | warm porcelain |
+| II | About | porcelain | clean ceramic |
+| III | Research | chrome | brushed steel |
+| IV | Projects | graphite | carbon composite |
+| V | Hardware | split chrome + charcoal | duality |
+| VI | Vision | void | pure darkness + neon |
+| VII | Contact | bone | return to warmth |
+
+Transitions between acts are smooth color interpolations (400ms during
+scroll), not hard cuts.
 
 ## Working Rules
-- Only three colors. No fourth accent introduced under any pretext.
-- Display type is Anton, minimum 96px on hero. Do not shrink for
-  "balance" or "readability" — the scale is the point.
-- Type-behind-subject composition on hero is non-negotiable. If a
-  layout suggestion breaks this, reject it.
-- Every 3D scene must have a static-image fallback for devices
-  without WebGL or with low GPU tier. Detect and switch automatically.
-- Mobile is a first-class target. The cyborg head renders on mobile
-  too — reduce polycount and postprocessing quality, don't remove the
-  scene.
-- Content sections are NOT to be built until the visual language and
-  3D pipeline are proven and approved.
+- Palette is seven neutrals + cyan. Cyan is the ONLY accent; introduce
+  no color outside the palette under any pretext.
+- Display type is Anton, minimum 96px on hero / 64px on section
+  headers. Do not shrink for "balance" or "readability" — the scale
+  is the point.
+- Type-behind-subject composition on the hero is non-negotiable: the
+  subject image occludes the letterforms; type is never overlaid on
+  top of the subject. If a layout suggestion breaks this, reject it.
+- Every 3D scene (Research only) must have a static/SVG fallback for
+  devices without WebGL or with low GPU tier. Detect and switch
+  automatically.
+- Mobile is a first-class target: scale type down, adapt layouts (see
+  Phase K), never drop sections.
+- The full build spec is docs/build-plan.md. Execute phases in order,
+  STOP after each phase for approval, and keep the build deployable
+  (npm run build + npm run dev clean) at every checkpoint.
+- Do NOT add flair outside the spec: no glassmorphism, neomorphism,
+  skeuomorphism, gradients (except palette temperature transitions),
+  particles, custom cursors, sound, decorative SVGs, lorem ipsum, or
+  UI libraries beyond what the plan specifies.

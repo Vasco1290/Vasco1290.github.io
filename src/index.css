@@ -5,7 +5,7 @@
 @layer base {
   html,
   body {
-    @apply min-h-screen bg-bg font-body text-fg;
+    @apply min-h-screen bg-bone font-body text-graphite;
   }
 
   body {
