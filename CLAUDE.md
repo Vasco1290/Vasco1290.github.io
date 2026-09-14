@@ -9,27 +9,25 @@ Personal portfolio positioning for:
 Primary brand mark: HARSHIT RAWAL. Synthesis is design language and
 long-term vision, not the site's identity.
 
-## Canonical Visual Reference
-`docs/design/banner-reference.png` is the source of truth for all
-visual decisions. Re-view it whenever making design choices.
+## Visual References
 
-Extracted specifications from the reference:
-- Head material: cracked white porcelain / ceramic, high gloss,
-  visible surface fractures across face, skull, neck
-- Fracture lines: emissive electric cyan (#00E5FF), glowing as if
-  lit from within, following organic branching patterns
-- Metal accents: small chrome studs/pins on temple, cheekbone, jaw
-- Neck: partially transparent, revealing internal cyan-lit
-  cabling/musculature
-- Pose: three-quarter view, chin slightly raised, eyes closed or
-  downcast — serene, contemplative, not aggressive
-- Background: flat warm cream (#F4EFE6), no gradient, no vignette
-- Lighting: soft key from upper-left, minimal fill, subtle rim light
-  along jaw/shoulder
-- COMPOSITIONAL RULE (critical): massive condensed display type sits
-  BEHIND the 3D subject in z-space. The subject partially occludes
-  the letterforms. Type is not overlaid on top of the model, and the
-  model is not placed next to the type. They collide.
+Three canonical references in docs/design/:
+
+1. hero-subject.png — The 2D image rendered as <img> in the
+   Hero section (Phase A). This IS the hero image, used as-is.
+
+2. material-reference.png — Surface material study. Reference
+   this when building UI components in Phase C (porcelain cards,
+   chrome dividers, emissive traces, engraved/extruded text).
+   Every material treatment should be traceable to this reference.
+
+3. composition-reference.png — Canonical composition rule: type
+   behind subject. Reference whenever display type interacts
+   with imagery. Subject occludes type; type is never overlaid
+   on top of subject.
+
+Re-view the appropriate reference before every design decision.
+Multiple references may apply to a single decision.
 
 ## Stack
 - Vite + React 19 + TypeScript
