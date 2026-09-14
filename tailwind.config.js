@@ -4,9 +4,13 @@ export default {
   theme: {
     extend: {
       colors: {
-        bg: '#F4EFE6', // warm cream
-        fg: '#0A0A0A', // near-black
-        accent: '#00E5FF', // electric cyan
+        bone: '#EAE5DC', // warm cream, slightly aged
+        porcelain: '#FAFAFA', // cold clean white
+        chrome: '#C8CDD2', // brushed steel grey
+        graphite: '#3A3A3A', // carbon composite
+        charcoal: '#1A1A1A', // deep engineered black
+        void: '#0A0A0A', // true black
+        cyan: '#00E5FF', // emissive electric cyan
       },
       fontFamily: {
         display: ['Anton', 'sans-serif'],
