@@ -64,7 +64,11 @@ filled shapes, flat color blocks.
 - Display: Anton (Google Fonts), minimum 96px on hero, 64px on
   section headers
 - Body: Inter (Google Fonts), 16px base, line-height 1.6
-- Numeric metrics: Inter tabular-nums, cyan color allowed
+- Numeric metrics — two scales:
+  - Display-scale metrics (the MetricNumber component): Anton,
+    tabular-nums, cyan (with emissive glow)
+  - Body-scale numbers within paragraphs: Inter, tabular-nums,
+    inherits the paragraph colour
 - Never mix more than these two families
 
 ### Spacing

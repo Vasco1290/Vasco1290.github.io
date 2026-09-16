@@ -39,6 +39,11 @@ jobs:
 
       # Prevent GitHub Pages from Jekyll-processing the Vite output (e.g.
       # files/dirs beginning with an underscore in hashed asset paths).
+      #
+      # TODO (Phase M): add an SPA fallback so client-side routes like /debug
+      # survive a direct load / refresh on GitHub Pages. Simplest fix:
+      #   cp dist/index.html dist/404.html
+      # (GitHub Pages serves 404.html for unknown paths; the SPA then routes.)
       - name: Disable Jekyll processing
         run: touch dist/.nojekyll
 
