@@ -78,7 +78,7 @@ export default function Hero({ simProgress = null }: { simProgress?: number | nu
     (simProgress ?? 0) <= 0.7 ? 1 : Math.max(0, 1 - ((simProgress ?? 0) - 0.7) / 0.3)
 
   return (
-    <section ref={heroRef} className="relative h-screen w-full overflow-hidden bg-bone">
+    <section id="hero" ref={heroRef} className="relative h-screen w-full overflow-hidden bg-bone">
       {/* Layer 1 (behind): Anton display type, carved into the bone. Scrolls 1x. */}
       <div className="pointer-events-none absolute inset-0 z-0 flex items-center justify-center">
         <h1
