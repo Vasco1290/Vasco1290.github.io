@@ -149,7 +149,16 @@ export default function DebugPage() {
         </Block>
 
         {/* 5 — MetricNumber */}
-        <Block label="MetricNumber · Inter tabular-nums, cyan, emissive glow">
+        <Block label="MetricNumber · Anton tabular-nums, cyan, emissive glow">
+          <div className="flex flex-col gap-3">
+            <Tag>display scale ~120px</Tag>
+            <div className="flex items-end gap-4">
+              <MetricNumber suffix="%" style={{ fontSize: 120 }}>
+                94
+              </MetricNumber>
+              <span className="mb-3 font-body text-sm text-graphite/50">conformal coverage</span>
+            </div>
+          </div>
           <div className="flex flex-wrap items-end gap-14">
             <div className="flex flex-col gap-2">
               <MetricNumber>1</MetricNumber>

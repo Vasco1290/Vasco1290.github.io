@@ -1,34 +1,35 @@
-import type { ReactNode } from 'react'
+import type { CSSProperties, ReactNode } from 'react'
 
 /**
- * MetricNumber — a large cyan stat with a subtle emissive glow.
- * NOTE: build-plan Phase C calls this "Anton numeric", but the Design System /
- * CLAUDE.md typography rule says numeric metrics are Inter tabular-nums. Per the
- * "follow CLAUDE.md and flag it" rule this uses Inter tabular-nums (semibold);
- * flagged for review — trivial to switch to Anton if preferred.
+ * MetricNumber — a monumental display-scale data point: Anton, tabular-nums,
+ * cyan, with an emissive glow. This is the display metric component (per the
+ * build-plan Phase C spec); body-scale numbers inside paragraphs use Inter
+ * tabular-nums instead (see CLAUDE.md typography).
  */
 export default function MetricNumber({
   children,
   suffix,
   className = '',
+  style,
 }: {
   children: ReactNode
   suffix?: string
   className?: string
+  style?: CSSProperties
 }) {
   return (
     <span
-      className={`inline-flex items-baseline font-body font-semibold tabular-nums text-cyan ${className}`}
+      className={`inline-flex items-baseline font-display tabular-nums leading-none text-cyan ${className}`}
       style={{
-        fontSize: 'clamp(44px, 6vw, 80px)',
-        lineHeight: 1,
-        letterSpacing: '-0.02em',
-        textShadow: '0 0 12px rgba(0,229,255,0.4), 0 0 26px rgba(0,229,255,0.22)',
+        fontSize: 'clamp(48px, 7vw, 96px)',
+        letterSpacing: '-0.01em',
+        textShadow: '0 0 14px rgba(0,229,255,0.45), 0 0 30px rgba(0,229,255,0.22)',
+        ...style,
       }}
     >
       {children}
       {suffix && (
-        <span className="ml-1 font-body font-medium" style={{ fontSize: '0.42em', letterSpacing: 0 }}>
+        <span className="ml-1.5 font-body font-medium" style={{ fontSize: '0.3em', letterSpacing: 0 }}>
           {suffix}
         </span>
       )}
