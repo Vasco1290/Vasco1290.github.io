@@ -1,4 +1,4 @@
-import { ReactLenis } from 'lenis/react'
+import SmoothScroll from './components/SmoothScroll'
 import Hero from './components/Hero'
 import AboutSection from './components/sections/AboutSection'
 import ResearchSection from './components/sections/ResearchSection'
@@ -45,6 +45,13 @@ function readOffsetVh(): number | null {
   return p.has('snapshot') ? 0 : null
 }
 
+// Capture-only: park the About keyword band at a fixed progress (?band=<0..1>).
+function readBandProgress(): number {
+  if (typeof window === 'undefined') return 0
+  const v = parseFloat(new URLSearchParams(window.location.search).get('band') || '0')
+  return Number.isFinite(v) ? Math.max(0, Math.min(1, v)) : 0
+}
+
 export default function App() {
   // Component library documentation route.
   if (typeof window !== 'undefined' && window.location.pathname.replace(/\/$/, '') === '/debug') {
@@ -58,7 +65,7 @@ export default function App() {
       <div style={{ height: '100vh', overflow: 'hidden' }}>
         <div style={{ transform: `translateY(${-offsetVh}vh)`, willChange: 'transform' }}>
           <Hero simProgress={Math.min(1, offsetVh / 100)} />
-          <AboutSection />
+          <AboutSection still bandProgress={readBandProgress()} />
           <ChromeDivider />
           <ResearchSection />
           <ChromeDivider />
@@ -75,8 +82,8 @@ export default function App() {
   }
 
   return (
-    <ReactLenis root options={{ lerp: 0.1, smoothWheel: true }}>
+    <SmoothScroll>
       <Sections />
-    </ReactLenis>
+    </SmoothScroll>
   )
 }
