@@ -6,12 +6,22 @@ const EASE = [0.22, 1, 0.36, 1] as const
 
 // Carved-into-porcelain effect. NOTE: the spec's `text-shadow: inset ...` is
 // invalid CSS (inset only exists on box-shadow), so it renders nothing. This is
-// the working letterpress equivalent: a light highlight just below each stroke
-// plus a faint dark shadow above, so the graphite type reads as engraved into
-// the bone surface rather than printed on top.
+// the working letterpress equivalent.
 const ENGRAVE = '0 1px 0 rgba(255,255,255,0.65), 0 -1px 2px rgba(0,0,0,0.12)'
 
-/** One line of Anton type with a per-letter mask-reveal (wipe up). */
+// Grounding shadow. NOTE: the spec suggested box-shadow, but box-shadow follows
+// the element's rectangle, not the PNG's alpha — on a cutout it would cast a
+// visible box. drop-shadow follows the silhouette, giving the light-on-light
+// subject physical presence instead of a pasted-on look.
+const GROUND = 'drop-shadow(0 48px 42px rgba(58,58,58,0.22))'
+
+// Deterministic still-frame mode for screenshots (?snapshot). It skips the
+// entrance/breathing/parallax so a headless capture reflects the final
+// composition regardless of animation timing. No effect for real visitors.
+const SNAPSHOT =
+  typeof window !== 'undefined' &&
+  new URLSearchParams(window.location.search).has('snapshot')
+
 function RevealLine({ text, startIndex }: { text: string; startIndex: number }) {
   return (
     <span className="block">
@@ -23,13 +33,9 @@ function RevealLine({ text, startIndex }: { text: string; startIndex: number }) 
         >
           <motion.span
             className="inline-block"
-            initial={{ y: '110%' }}
+            initial={SNAPSHOT ? false : { y: '110%' }}
             animate={{ y: '0%' }}
-            transition={{
-              duration: 0.8,
-              ease: EASE,
-              delay: 0.4 + (startIndex + i) * 0.06,
-            }}
+            transition={{ duration: 0.8, ease: EASE, delay: 0.4 + (startIndex + i) * 0.06 }}
           >
             {ch}
           </motion.span>
@@ -40,7 +46,6 @@ function RevealLine({ text, startIndex }: { text: string; startIndex: number }) 
 }
 
 export default function Hero() {
-  // Cursor parallax (hover-capable devices only).
   const mx = useMotionValue(0)
   const my = useMotionValue(0)
   const px = useSpring(mx, { stiffness: 100, damping: 20 })
@@ -63,7 +68,7 @@ export default function Hero() {
         <h1
           className="select-none text-center font-display uppercase text-graphite"
           style={{
-            fontSize: 'clamp(96px, 18vw, 240px)',
+            fontSize: 'clamp(96px, 20vw, 280px)',
             lineHeight: 0.85,
             letterSpacing: '-0.02em',
             textShadow: ENGRAVE,
@@ -74,27 +79,28 @@ export default function Hero() {
         </h1>
       </div>
 
-      {/* Layer 2 (front): the hero subject, right-of-center, occluding the type.
-          Parallax wrapper -> entrance (fade + scale) -> breathing loop. */}
-      <motion.div
-        className="pointer-events-none absolute inset-y-0 z-10 flex items-center"
-        style={{ left: '50%', x: px, y: py }}
-      >
-        <motion.div
-          initial={{ opacity: 0, scale: 1.05 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1.2, ease: EASE }}
-        >
-          <motion.img
-            src={heroSubject}
-            alt="Harshit Rawal — porcelain cyborg portrait"
-            className="h-[60vh] w-auto object-contain"
-            animate={{ scale: [1, 1.01, 1] }}
-            transition={{ duration: 4, ease: 'easeInOut', repeat: Infinity }}
-            draggable={false}
-          />
+      {/* Layer 2 (front): the subject, centered so the head occludes the MIDDLE
+          of the letterforms. Parallax wrapper -> entrance -> breathing loop.
+          translateY nudges the face/jaw down onto the type's mid-line. */}
+      <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center">
+        <motion.div style={{ x: px, y: py }}>
+          <motion.div
+            initial={SNAPSHOT ? false : { opacity: 0, scale: 1.05 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1.2, ease: EASE }}
+          >
+            <motion.img
+              src={heroSubject}
+              alt="Harshit Rawal — porcelain cyborg portrait"
+              className="h-[75vh] w-auto object-contain"
+              style={{ filter: GROUND, translateY: '4vh' }}
+              animate={SNAPSHOT ? undefined : { scale: [1, 1.01, 1] }}
+              transition={{ duration: 4, ease: 'easeInOut', repeat: Infinity }}
+              draggable={false}
+            />
+          </motion.div>
         </motion.div>
-      </motion.div>
+      </div>
 
       {/* Below hero: chrome-gradient divider + caption. */}
       <div className="absolute inset-x-0 bottom-0 z-20 flex flex-col items-center gap-5 pb-12">
