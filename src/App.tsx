@@ -6,17 +6,8 @@ import ProjectsSection from './components/sections/ProjectsSection'
 import HardwareSection from './components/sections/HardwareSection'
 import VisionSection from './components/sections/VisionSection'
 import ContactSection from './components/sections/ContactSection'
-
-// 1px chrome-gradient divider between sections.
-function ChromeDivider() {
-  return (
-    <div
-      aria-hidden
-      className="h-px w-full"
-      style={{ background: 'linear-gradient(90deg, transparent 0%, #C8CDD2 50%, transparent 100%)' }}
-    />
-  )
-}
+import ChromeDivider from './components/ui/ChromeDivider'
+import DebugPage from './pages/DebugPage'
 
 function Sections() {
   return (
@@ -55,6 +46,11 @@ function readOffsetVh(): number | null {
 }
 
 export default function App() {
+  // Component library documentation route.
+  if (typeof window !== 'undefined' && window.location.pathname.replace(/\/$/, '') === '/debug') {
+    return <DebugPage />
+  }
+
   const offsetVh = readOffsetVh()
 
   if (offsetVh != null) {
