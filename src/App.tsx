@@ -58,6 +58,24 @@ export default function App() {
     return <DebugPage />
   }
 
+  // Capture-only: render one section in isolation (?only=projects[&compact][&hover=<i>]).
+  if (typeof window !== 'undefined') {
+    const p = new URLSearchParams(window.location.search)
+    if (p.get('only') === 'projects') {
+      const hoverRaw = p.get('hover')
+      const hoverIndex = hoverRaw != null && hoverRaw !== '' ? parseInt(hoverRaw, 10) : null
+      return (
+        <main className="bg-graphite">
+          <ProjectsSection
+            still
+            compact={p.has('compact')}
+            hoverIndex={hoverIndex != null && Number.isFinite(hoverIndex) ? hoverIndex : null}
+          />
+        </main>
+      )
+    }
+  }
+
   const offsetVh = readOffsetVh()
 
   if (offsetVh != null) {
@@ -69,7 +87,7 @@ export default function App() {
           <ChromeDivider />
           <ResearchSection />
           <ChromeDivider />
-          <ProjectsSection />
+          <ProjectsSection still />
           <ChromeDivider />
           <HardwareSection />
           <ChromeDivider />
