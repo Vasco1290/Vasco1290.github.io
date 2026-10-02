@@ -30,8 +30,10 @@ export default function EngravedText({
         WebkitBackgroundClip: 'text',
         backgroundClip: 'text',
         // Asymmetric to sell the recess: crisp bright lip BELOW (near edge lit),
-        // firmer shadow ABOVE-inside (upper wall in shade). depth deepens the shade.
-        textShadow: `0 1px 0 rgba(255,255,255,0.9), 0 -1px ${Math.max(1, depth - 2)}px rgba(10,10,10,0.5)`,
+        // soft shade ABOVE (upper wall). These must be drop-shadow filters, not
+        // text-shadow: text-shadow paints above the background, so it would
+        // cover the background-clipped gradient that forms the groove.
+        filter: `drop-shadow(0 1px 0 rgba(255,255,255,0.85)) drop-shadow(0 -1px ${Math.max(1, depth - 2)}px rgba(10,10,10,0.35))`,
         letterSpacing: '-0.01em',
         ...style,
       }}
