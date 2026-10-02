@@ -1,7 +1,7 @@
 # MASTER BUILD PROMPT v2 — Material Coherence Portfolio
 
 **Repo:** `Vasco1290/Vasco1290.github.io`
-**Branch:** `redesign/3d-portfolio`
+**Branch:** `redesign/material-coherence`
 
 ---
 
@@ -467,7 +467,7 @@ Between each section, implement smooth 400ms bg color transitions as user scroll
 
 ## PHASE M — PREVIEW DEPLOY
 
-1. Deploy `redesign/3d-portfolio` branch to preview environment (Netlify or Vercel free tier — better preview UX than `gh-pages-preview`)
+1. Deploy `redesign/material-coherence` branch to preview environment (Netlify or Vercel free tier — better preview UX than `gh-pages-preview`)
 2. Verify all 7 sections work end-to-end at preview URL
 3. Test on real mobile device if possible
 4. Report preview URL
@@ -483,7 +483,7 @@ Between each section, implement smooth 400ms bg color transitions as user scroll
 - Real content copy for all 7 sections
 - Real project data (arXiv link, GitHub links, actual metrics)
 - SEO meta tags, OG image (use banner), favicon
-- Merge `redesign/3d-portfolio` → `main`
+- Merge `redesign/material-coherence` → `main`
 
 **STOP after Phase M and wait for content instructions.**
 
