@@ -105,6 +105,32 @@ world — porcelain, chrome, carbon composite, cyan-emissive traces:
 Transitions between acts are smooth color interpolations (400ms during
 scroll), not hard cuts.
 
+### Component variants (src/components/ui, documented live at /debug)
+- EmissiveTrace — one component, background-adaptive via `on`: 'light'
+  (tighter, more opaque bloom for porcelain/chrome/bone) | 'dark' (wide
+  neon bloom for graphite/charcoal/void). Core is always exactly #00E5FF.
+- ExtrudedText — raised sculpture, background-adaptive via `on`: 'light'
+  (default — graphite-toned walls/cast, for bone/porcelain/chrome) |
+  'dark' (near-black walls/cast + bone face, for graphite/charcoal/void).
+  Always use the variant matching the section's material.
+- EngravedText — inset carving (shaded groove + bright lower lip); light
+  grounds.
+- MetricNumber — Anton tabular-nums display metric, cyan with glow.
+- ChromeDivider (section seams) / PorcelainCard (chrome-trim tile, cyan
+  trace on hover).
+
+### Deliberate Omissions (do NOT "fix" these)
+- Projects (Act IV) has NO large Anton section header. "Selected
+  Engineering" appears only as a small eyebrow label under the "04"
+  number. The full-width bands — monumental cyan numbers + extruded
+  names — ARE the section identity. Do not add a section header here.
+
+### Pending content changes (post-Phase M content pass ONLY, not before)
+- Projects content is placeholder. To be removed: RPO Paper, CloudLab
+  v2, Mammoth (all dropped). RSSI Conformal stays; replacements TBD.
+- Until the content pass, keep the four placeholder bands so the section
+  stays correctly sized for composition.
+
 ## Working Rules
 - Palette is seven neutrals + cyan. Cyan is the ONLY accent; introduce
   no color outside the palette under any pretext.
