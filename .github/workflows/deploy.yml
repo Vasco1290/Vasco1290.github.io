@@ -1,6 +1,6 @@
 name: Deploy to GitHub Pages
 
-# Deploy only from main. The redesign work lives on redesign/3d-portfolio and
+# Deploy only from main. The redesign work lives on redesign/material-coherence and
 # must NOT overwrite the live site until it is explicitly merged into main.
 on:
   push:
