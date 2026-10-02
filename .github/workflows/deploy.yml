@@ -1,0 +1,67 @@
+name: Deploy to GitHub Pages
+
+# Deploy only from main. The redesign work lives on redesign/material-coherence and
+# must NOT overwrite the live site until it is explicitly merged into main.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Permissions required by the GitHub Pages deployment actions.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow one concurrent deployment; newer pushes cancel in-progress runs.
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      # Prevent GitHub Pages from Jekyll-processing the Vite output (e.g.
+      # files/dirs beginning with an underscore in hashed asset paths).
+      #
+      # TODO (Phase M): add an SPA fallback so client-side routes like /debug
+      # survive a direct load / refresh on GitHub Pages. Simplest fix:
+      #   cp dist/index.html dist/404.html
+      # (GitHub Pages serves 404.html for unknown paths; the SPA then routes.)
+      - name: Disable Jekyll processing
+        run: touch dist/.nojekyll
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
