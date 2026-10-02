@@ -61,6 +61,12 @@ export default function App() {
   // Capture-only: render one section in isolation (?only=projects[&compact][&hover=<i>]).
   if (typeof window !== 'undefined') {
     const p = new URLSearchParams(window.location.search)
+    if (p.get('only') === 'hardware') {
+      // ?reveal=<0..1> parks the curtain reveal mid-assembly; omitted = final.
+      const r = p.has('reveal') ? parseFloat(p.get('reveal') || '1') : null
+      const reveal = r != null && Number.isFinite(r) ? Math.max(0, Math.min(1, r)) : null
+      return <HardwareSection still={reveal == null} revealProgress={reveal} />
+    }
     if (p.get('only') === 'projects') {
       const hoverRaw = p.get('hover')
       const hoverIndex = hoverRaw != null && hoverRaw !== '' ? parseInt(hoverRaw, 10) : null
@@ -89,7 +95,7 @@ export default function App() {
           <ChromeDivider />
           <ProjectsSection still />
           <ChromeDivider />
-          <HardwareSection />
+          <HardwareSection still />
           <ChromeDivider />
           <VisionSection />
           <ChromeDivider />
