@@ -1,4 +1,5 @@
-import { motion } from 'framer-motion'
+import { useRef } from 'react'
+import { motion, useInView } from 'framer-motion'
 import EngravedText from '../ui/EngravedText'
 import ExtrudedText from '../ui/ExtrudedText'
 import MetricNumber from '../ui/MetricNumber'
@@ -25,18 +26,28 @@ export default function HardwareSection({
   const leftX = `${-(1 - sp) * 100}%`
   const rightX = `${(1 - sp) * 100}%`
 
+  // One trigger for the whole reveal: the SECTION entering view. The vein
+  // can't observe itself — at scaleY: 0 its box has no height, so its own
+  // whileInView never fires and it stays collapsed.
+  const sectionRef = useRef<HTMLElement>(null)
+  const inView = useInView(sectionRef, { once: true, margin: '-20% 0px' })
+
   const leftPanel = staticMode
     ? { initial: false as const, animate: { x: leftX } }
-    : { initial: { x: '-100%' }, whileInView: { x: '0%' }, viewport: { once: true, margin: '-20% 0px' } }
+    : { initial: { x: '-100%' }, animate: { x: inView ? '0%' : '-100%' } }
   const rightPanel = staticMode
     ? { initial: false as const, animate: { x: rightX } }
-    : { initial: { x: '100%' }, whileInView: { x: '0%' }, viewport: { once: true, margin: '-20% 0px' } }
+    : { initial: { x: '100%' }, animate: { x: inView ? '0%' : '100%' } }
   const vein = staticMode
     ? { initial: false as const, animate: { scaleY: sp, opacity: sp } }
-    : { initial: { scaleY: 0, opacity: 0 }, whileInView: { scaleY: 1, opacity: 1 }, viewport: { once: true, margin: '-20% 0px' } }
+    : { initial: { scaleY: 0, opacity: 0 }, animate: inView ? { scaleY: 1, opacity: 1 } : { scaleY: 0, opacity: 0 } }
 
   return (
-    <section id="hardware" className="relative min-h-screen overflow-hidden bg-void text-bone">
+    <section
+      ref={sectionRef}
+      id="hardware"
+      className="relative min-h-screen overflow-hidden bg-void text-bone"
+    >
       {/* Base is void so BOTH curtains (chrome and charcoal) visibly slide in. */}
       {/* Left half — chrome / SILICON (engraved). */}
       <motion.div
