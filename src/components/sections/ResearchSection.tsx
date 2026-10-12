@@ -5,7 +5,7 @@ export default function ResearchSection() {
     <SectionShell
       id="research"
       number="03"
-      title="Published Work"
+      title="Research Experience"
       className="bg-chrome text-graphite"
     />
   )

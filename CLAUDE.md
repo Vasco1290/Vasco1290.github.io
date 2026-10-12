@@ -131,6 +131,13 @@ scroll), not hard cuts.
 - Until the content pass, keep the four placeholder bands so the section
   stays correctly sized for composition.
 
+### Pending design checks
+- Phase I: test EngravedText (dark groove, drop-shadow construction since
+  Phase F) on "WORK TOGETHER" over bone specifically. If it reads as dark
+  gradient type rather than a carving, design a proper light-faced variant
+  then. (The lighter Phase C look was a text-shadow side effect, not a
+  design; don't simply restore it.)
+
 ## Working Rules
 - Palette is seven neutrals + cyan. Cyan is the ONLY accent; introduce
   no color outside the palette under any pretext.
