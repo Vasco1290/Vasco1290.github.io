@@ -37,7 +37,18 @@ Multiple references may apply to a single decision.
 - GSAP + ScrollTrigger for scroll-choreographed sequences
 - React Three Fiber + Drei + Postprocessing — Research section ONLY
   (Phase G); reinstalled there, procedural geometry, no .glb file
-- detect-gpu for adaptive rendering and fallbacks
+- detect-gpu for adaptive rendering and fallbacks (installed in Phase G;
+  WebGL on tier >= 2, 2D fallback otherwise)
+
+## Content
+To change content, edit src/content/site.ts only. Components read all
+copy, metrics, entries and links from it; never hardcode content in a
+component.
+- Research entries: the first entry is featured; others render as
+  compact rows. Each entry's `visual` key picks its 3D scene from
+  src/components/research/scenes.ts. Adding a new key to the
+  ResearchVisual type fails the build until a WebGL scene and a 2D
+  fallback are registered there.
 
 ## Design System (source of truth)
 
@@ -130,6 +141,9 @@ scroll), not hard cuts.
   v2, Mammoth (all dropped). RSSI Conformal stays; replacements TBD.
 - Until the content pass, keep the four placeholder bands so the section
   stays correctly sized for composition.
+
+- Research: MindNav role line is a draft; status 'active' is unconfirmed.
+- Contact: LinkedIn URL is a placeholder.
 
 ### Pending design checks
 - Phase I: test EngravedText (dark groove, drop-shadow construction since

@@ -58,7 +58,8 @@ export default function App() {
     return <DebugPage />
   }
 
-  // Capture-only: render one section in isolation (?only=projects[&compact][&hover=<i>]).
+  // Capture-only: render one section in isolation
+  // (?only=projects[&compact][&hover=<i>] | hardware[&reveal=<0..1>] | research[&scene=...]).
   if (typeof window !== 'undefined') {
     const p = new URLSearchParams(window.location.search)
     if (p.get('only') === 'hardware') {
@@ -66,6 +67,10 @@ export default function App() {
       const r = p.has('reveal') ? parseFloat(p.get('reveal') || '1') : null
       const reveal = r != null && Number.isFinite(r) ? Math.max(0, Math.min(1, r)) : null
       return <HardwareSection still={reveal == null} revealProgress={reveal} />
+    }
+    if (p.get('only') === 'research') {
+      // Pair with ?scene=webgl|fallback to force a renderer.
+      return <ResearchSection />
     }
     if (p.get('only') === 'projects') {
       const hoverRaw = p.get('hover')

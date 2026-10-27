@@ -321,37 +321,50 @@ A single 1px cyan trace runs across the split line vertically down the section, 
 
 ---
 
-## PHASE G — RESEARCH SECTION WITH 3D (Act III)
+## PHASE G — RESEARCH EXPERIENCE (Act III) — revised
 
-Background: chrome (`#C8CDD2`)
+Replaces the original Phase G (built around the RPO paper, now dropped).
 
-Reinstall for THIS SECTION ONLY: `three`, `@react-three/fiber`, `@react-three/drei`, `@react-three/postprocessing`
+### Part 1 — Content data layer (first)
 
-### Layout
+1. Create `src/content/site.ts` holding ALL section content as typed data: research entries, project bands, hardware entries, about metrics, keyword band list, contact links.
+2. Refactor About, Projects, Hardware to read from it. No visual change — screenshots before and after must match.
+3. Each research entry: `{ id, title, role, summary, tags[], links[], visual, status: 'active' | 'complete' | 'paused', team: boolean }`. `visual` is a key that picks which 3D scene to show (e.g. `'eeg-waves'`); new entries can add new scenes later.
+4. Document in CLAUDE.md: "To change content, edit src/content/site.ts only."
 
-**Left half: text content**
-- Section number "03" in cyan
-- Heading "Published Work" using `<EngravedText>`
-- Paper title: "Uncertainty-Aware Pose Estimation for Tumbling Spacecraft via Conformal Prediction (extending PURSE)"
-- One-paragraph abstract in Inter
-- arXiv link as `<EmissiveTrace>` underlined text
-- Key result: coverage % and efficiency % as `<MetricNumber>`
+### Part 2 — Research section
 
-**Right half: R3F canvas with PROCEDURAL geometry (no `.glb` file)**
-- Torus knot geometry OR custom shape suggesting a tumbling body
-- MeshStandardMaterial: chrome-metallic (metalness 0.9, roughness 0.2), with cyan emissive edges via wireframe overlay
-- Slow tumbling animation on 2 axes (0.003 and 0.005 rad/frame) — genuinely represents the paper's subject
-- Environment preset "warehouse" from drei for reflections
-- Postprocessing: Bloom on cyan emissive edges only
+Background: chrome. Heading: "Research Experience" (`<EngravedText>`). Section number 03.
 
-### Adaptive rendering
+- **Left half:** the featured entry (first in the list)
+  - title (Anton 64px)
+  - role line (Inter, graphite) — if `team: true`, it must state the specific personal contribution
+  - summary paragraph (Inter, ~60ch)
+  - tags as small chrome-bordered pills
+  - links as `<EmissiveTrace on="light">` underlines
+- **Right half:** the 3D scene chosen by the entry's `visual` key
+- **Below:** any other entries as compact one-line rows (title · role · status). Hidden if there's only one entry.
 
-- Detect WebGL support and GPU tier
-- Low tier / no WebGL: fallback to animated SVG diagram of the same shape (still tumbling, but 2D)
+Featured entry for now — MindNav: "Hands-free typing from EEG brain signals. Reads electrical activity from the scalp and turns it into letters on screen, without touching a keyboard." Tags: EEG, BCI, Signal processing. `visual: 'eeg-waves'`, `team: true`.
 
-**CHECKPOINT G:** Research section is the site's "wow" moment — the 3D shape is EARNED because it represents the actual paper. Fallback works cleanly on low-tier devices.
+### Part 3 — The 'eeg-waves' 3D scene
 
-**Commit:** `phase G: research with earned 3D geometry`
+Reinstall: `three`, `@react-three/fiber`, `@react-three/drei`, `@react-three/postprocessing`.
+
+- 8 thin horizontal lines stacked vertically, like EEG channels
+- Each line wiggles with its own slow, noisy wave (different speed and shape per line)
+- Lines in graphite; ONE line in cyan with bloom — the signal the system is "reading"
+- Scene tilted slightly in 3D so lines recede into depth
+- Very slow drift; cursor nudges the camera a few degrees (hover devices only)
+- No `.glb` files, everything procedural
+
+Fallback (no WebGL or low GPU tier): same 8 lines drawn on a 2D canvas, same motion, no bloom.
+
+Lazy-load the scene: only mount when the section is near view.
+
+**CHECKPOINT G:** Screenshot the section, plus the fallback version. Confirm a second dummy research entry can be added purely by editing `site.ts` (then remove it).
+
+**Commit:** `phase G: research experience + content data layer`
 
 ---
 
@@ -430,7 +443,7 @@ Between each section, implement smooth 400ms bg color transitions as user scroll
 
 ## PHASE K — ADAPTIVE + MOBILE
 
-1. Install `detect-gpu`
+1. `detect-gpu` (already installed in Phase G for the Research fallback)
 2. GPU tier detection:
    - **Low:** no R3F in Research (use SVG fallback), simpler animations, no cursor parallax on hero
    - **Medium:** R3F with `dpr [1, 1.5]`, no postprocessing

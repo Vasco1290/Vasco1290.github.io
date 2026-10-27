@@ -3,6 +3,7 @@ import { motion, useInView } from 'framer-motion'
 import EngravedText from '../ui/EngravedText'
 import ExtrudedText from '../ui/ExtrudedText'
 import MetricNumber from '../ui/MetricNumber'
+import { hardware } from '../../content/site'
 
 const EASE = [0.22, 1, 0.36, 1] as const
 
@@ -56,17 +57,18 @@ export default function HardwareSection({
         transition={{ duration: 1.2, ease: EASE }}
       >
         <div className="flex flex-col gap-6 pl-[clamp(24px,6vw,120px)] pr-[clamp(24px,4vw,64px)]">
-          <EngravedText style={{ fontSize: 'clamp(56px, 7vw, 96px)', lineHeight: 0.9 }}>SILICON</EngravedText>
+          <EngravedText style={{ fontSize: 'clamp(56px, 7vw, 96px)', lineHeight: 0.9 }}>
+            {hardware.silicon.label}
+          </EngravedText>
           <p className="max-w-[42ch] font-body text-base leading-relaxed text-graphite/75">
-            Conformal WiFi localization on bare-metal Pi Zero + ESP8266 — calibrated
-            coverage guarantees from RSSI alone, no extra sensors.
+            {hardware.silicon.body}
           </p>
           <div className="flex flex-col gap-1">
-            <MetricNumber suffix="%" style={{ fontSize: 'clamp(40px, 4.5vw, 68px)' }}>
-              90
+            <MetricNumber suffix={hardware.silicon.metric.suffix} style={{ fontSize: 'clamp(40px, 4.5vw, 68px)' }}>
+              {hardware.silicon.metric.value}
             </MetricNumber>
             <span className="font-body text-xs uppercase tracking-[0.2em] text-graphite/50">
-              localization coverage
+              {hardware.silicon.metricLabel}
             </span>
           </div>
         </div>
@@ -80,18 +82,17 @@ export default function HardwareSection({
       >
         <div className="flex flex-col items-end gap-6 pr-[clamp(24px,6vw,120px)] pl-[clamp(24px,4vw,64px)] text-right">
           <ExtrudedText on="dark" style={{ fontSize: 'clamp(56px, 7vw, 96px)', lineHeight: 0.9 }}>
-            SYSTEMS
+            {hardware.systems.label}
           </ExtrudedText>
           <p className="max-w-[42ch] font-body text-base leading-relaxed text-bone/70">
-            Two years of AV perception at Autonex — annotation pipelines, dataset
-            curation, and model evaluation at fleet scale.
+            {hardware.systems.body}
           </p>
           <div className="flex flex-col items-end gap-1">
-            <MetricNumber suffix="M" style={{ fontSize: 'clamp(40px, 4.5vw, 68px)' }}>
-              2
+            <MetricNumber suffix={hardware.systems.metric.suffix} style={{ fontSize: 'clamp(40px, 4.5vw, 68px)' }}>
+              {hardware.systems.metric.value}
             </MetricNumber>
             <span className="font-body text-xs uppercase tracking-[0.2em] text-bone/40">
-              frames annotated
+              {hardware.systems.metricLabel}
             </span>
           </div>
         </div>
