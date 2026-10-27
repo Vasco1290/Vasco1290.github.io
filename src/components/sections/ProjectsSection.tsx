@@ -3,53 +3,9 @@ import { motion } from 'framer-motion'
 import ExtrudedText from '../ui/ExtrudedText'
 import MetricNumber from '../ui/MetricNumber'
 import EmissiveTrace from '../ui/EmissiveTrace'
+import { projects, type Project } from '../../content/site'
 
 const EASE = [0.22, 1, 0.36, 1] as const
-
-type Project = {
-  n: string
-  name: string
-  desc: string
-  metric: { value: number; suffix?: string }
-  metricLabel: string
-  github: string
-}
-
-// Placeholder content — real metrics/links land post-Phase M.
-const PROJECTS: Project[] = [
-  {
-    n: '01',
-    name: 'RPO Paper',
-    desc: 'PURSE extension for uncertainty-aware pose estimation of tumbling spacecraft.',
-    metric: { value: 6, suffix: 'DoF' },
-    metricLabel: 'pose estimate',
-    github: 'https://github.com/Vasco1290/rpo-purse',
-  },
-  {
-    n: '02',
-    name: 'RSSI Conformal',
-    desc: 'WiFi localization with conformal coverage guarantees on Pi Zero + ESP8266.',
-    metric: { value: 90, suffix: '%' },
-    metricLabel: 'coverage',
-    github: 'https://github.com/Vasco1290/rssi-conformal',
-  },
-  {
-    n: '03',
-    name: 'CloudLab v2',
-    desc: 'Go-based collaborative, reproducible development environments.',
-    metric: { value: 12, suffix: 'k' },
-    metricLabel: 'lines of Go',
-    github: 'https://github.com/Vasco1290/cloudlab',
-  },
-  {
-    n: '04',
-    name: 'Mammoth',
-    desc: 'A Rust rewrite of Hadoop, built from scratch for modern hardware.',
-    metric: { value: 3, suffix: '×' },
-    metricLabel: 'throughput',
-    github: 'https://github.com/Vasco1290/mammoth',
-  },
-]
 
 function CyanDivider() {
   return (
@@ -113,7 +69,7 @@ function ProjectBand({
             viewport={{ once: true, margin: '-15% 0px' }}
             transition={{ duration: 0.4, ease: EASE }}
           >
-            {project.n}
+            {String(index + 1).padStart(2, '0')}
           </motion.span>
         </div>
 
@@ -169,8 +125,8 @@ export default function ProjectsSection({
       </div>
 
       <div className="flex flex-col">
-        {PROJECTS.map((project, i) => (
-          <Fragment key={project.n}>
+        {projects.map((project, i) => (
+          <Fragment key={project.id}>
             {i > 0 && <CyanDivider />}
             <ProjectBand
               project={project}

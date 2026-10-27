@@ -5,23 +5,16 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import ExtrudedText from '../ui/ExtrudedText'
 import MetricNumber from '../ui/MetricNumber'
+import { about, type AboutMetric } from '../../content/site'
 
 gsap.registerPlugin(ScrollTrigger, useGSAP)
 
 const EASE = [0.22, 1, 0.36, 1] as const
 
-const KEYWORDS =
-  'PERCEPTION · UNCERTAINTY · EDGE · ROBOTICS · CONFORMAL PREDICTION · DISTRIBUTION SHIFT · SAFETY CRITICAL · '
-
-type Metric = { value: number; suffix?: string; label: string }
-const METRICS: Metric[] = [
-  { value: 1, label: 'Published preprint' },
-  { value: 2, suffix: 'yr', label: 'AV perception at Autonex' },
-  { value: 3, label: 'Hardware research projects' },
-]
+const KEYWORDS = about.keywords.map((k) => `${k} · `).join('')
 
 /** One metric that counts up from 0 and pulses cyan when it scrolls into view. */
-function CountUpMetric({ metric, still }: { metric: Metric; still: boolean }) {
+function CountUpMetric({ metric, still }: { metric: AboutMetric; still: boolean }) {
   const ref = useRef<HTMLDivElement>(null)
   const inView = useInView(ref, { once: true, margin: '-15% 0px' })
   const [display, setDisplay] = useState(still ? metric.value : 0)
@@ -136,21 +129,19 @@ export default function AboutSection({
                 style={{ transformOrigin: 'bottom' }}
               >
                 <ExtrudedText style={{ fontSize: 'clamp(56px, 9vw, 96px)', lineHeight: 0.95 }}>
-                  Perception Under Uncertainty
+                  {about.heading}
                 </ExtrudedText>
               </motion.div>
             </div>
 
             <p className="max-w-[58ch] font-body text-base leading-relaxed text-graphite/80">
-              I build perception systems that stay honest when the world drifts —
-              uncertainty-aware models for robotics and autonomy, where knowing when a
-              prediction can&apos;t be trusted matters as much as the prediction itself.
+              {about.body}
             </p>
           </div>
 
           {/* Right: metrics stacked */}
           <div className="flex flex-col gap-10 md:items-end">
-            {METRICS.map((m) => (
+            {about.metrics.map((m) => (
               <CountUpMetric key={m.label} metric={m} still={still} />
             ))}
           </div>
